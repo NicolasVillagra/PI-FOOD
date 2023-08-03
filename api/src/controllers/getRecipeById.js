@@ -1,6 +1,8 @@
 const axios = require('axios')
 const {Recipe} = require('../db')
 const { validate: isUUID } = require('uuid');
+require('dotenv').config();
+const {API_KEY} = process.env;
 
 const getRecipe =async (req,res)=>{
   const {idRecipe} = req.params
@@ -10,9 +12,9 @@ const getRecipe =async (req,res)=>{
       res.status(200).json(recipeDb)
     }
     else{
-      const apiRequest = await axios(`https://api.spoonacular.com/recipes/${idRecipe}/information?apiKey=a0f51f3a58d7418fb21e10147079c2ac&includeNutrition=true.`)
+      const apiRequest = await axios(`https://api.spoonacular.com/recipes/${idRecipe}/information?apiKey=${API_KEY}&includeNutrition=true.`)
       const response = apiRequest.data
-      const recetaGuardada = {
+      const recetaGuardada =  {
         id: response.id,
         name: response.title,
         image: response.image,

@@ -1,0 +1,51 @@
+body{
+    background-color: black;
+}
+.tuBody{
+    width: 100%;
+    height: 900px;
+}
+.hero{
+    margin: auto;
+    width: 100%;
+    height: 900px;
+    background: url('../../assets/Delicious.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.buttonHome {
+    --bg: #e74c3c;
+    --text-color: #fff;
+    position: relative;
+    width: 200px;
+    border: none;
+    background: var(--bg);
+    color: var(--text-color);
+    padding: 1em;
+    font-weight: bold;
+    text-transform: uppercase;
+    transition: 0.2s;
+    border-radius: 5px;
+    opacity: 0.8;
+    letter-spacing: 1px;
+    box-shadow: #c0392b 0px 7px 2px, #000 0px 8px 5px;
+    margin-bottom: 300px;
+    font-size: 20px;
+    height: 77px;
+  }
+  
+  .buttonHome:hover {
+    opacity: 1;
+  }
+  
+  .buttonHome:active {
+    top: 4px;
+    box-shadow: #c0392b 0px 3px 2px,#000 0px 3px 5px;
+  }
+    a{
+        text-decoration: none;
+        color: white;
+    }

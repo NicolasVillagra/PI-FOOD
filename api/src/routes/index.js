@@ -9,6 +9,8 @@ const { Op } = require('sequelize')
 const {getDiets} = require('../controllers/dietsRequest')
 const {getRecipesName} = require('../controllers/getRecipesName')
 const {postRecipe} = require('../controllers/postRecipes')
+const {getAllRecipes} = require('../controllers/getAllRecipes')
+const {getRecipesHandler,getRecipeByIdHandler} = require('../handlers/recipeHandle')
 
 
 const router = Router();
@@ -16,11 +18,12 @@ const router = Router();
 // Configurar los routers
 // Ejemplo: router.use('/auth', authRouter);
 router.get('/recipes/:idRecipe',getRecipe)
-router.get('/recipes', getRecipesName);
+router.get('/recipes', getRecipesHandler);
 // Ruta para crear una nueva receta y asociarla con dietas
 router.post('/recipes', postRecipe);
   
   // Ruta para obtener todos los tipos de dietas
-  router.get('/diets',getDiets);
+router.get('/diets',getDiets);
+router.get('/getAllRecipes',getAllRecipes)
 
 module.exports = router;

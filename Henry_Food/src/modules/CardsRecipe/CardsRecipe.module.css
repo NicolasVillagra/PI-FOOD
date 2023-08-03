@@ -1,0 +1,11 @@
+.containerRecipe{
+    width: 95%;
+    background-color: orange;
+    height: 100rem;
+    border-radius: 10px;
+    margin: auto;
+    display: grid;
+    grid-template-columns: repeat(3, 395px);
+    gap: 13px;
+    justify-items: center;
+  }

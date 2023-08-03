@@ -1,23 +1,25 @@
 const { Recipe, Diets } = require("../db");
 const axios = require("axios");
 const { Op } = require("sequelize");
+require('dotenv').config();
+const {API_KEY} = process.env;
 
-const getRecipesName = async (req, res) => {
-  const { name } = req.query;
+const getRecipesName = async (id) => {
+  // const { name } = req.query;
   const recipes = await Recipe.findAll({
     where: {
       name: {
-        [Op.iLike]: `%${name}%`,
+        [Op.iLike]: `%${id}%`,
       },
     },
     include: [Diets],
   });
-  try {
+
     if (recipes.length > 0) {
-      res.status(200).json({ recipes });
+      return recipes
     } else {
       const apiRequest = await axios(
-        `https://api.spoonacular.com/recipes/complexSearch?query=${name}&apiKey=a0f51f3a58d7418fb21e10147079c2ac`
+        `https://api.spoonacular.com/recipes/complexSearch?query=${id}&apiKey=${API_KEY}`
       );
       const response = apiRequest.data.results;
       const recetaGuardada = response.map((e) => {
@@ -27,10 +29,8 @@ const getRecipesName = async (req, res) => {
           image: e.image,
         };
       });
-      res.status(200).json({ recetaGuardada });
+      return recetaGuardada
     }
-  } catch (err) {
-    res.status(500).json({ error: "Error del servidor", err });
-  }
-};
+
+}
 module.exports = { getRecipesName };
