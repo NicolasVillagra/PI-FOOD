@@ -14,16 +14,16 @@ const getRecipe =async (req,res)=>{
     else{
       const apiRequest = await axios(`https://api.spoonacular.com/recipes/${idRecipe}/information?apiKey=${API_KEY}&includeNutrition=true.`)
       const response = apiRequest.data
-      const recetaGuardada =  {
+      const recipe =  {
         id: response.id,
         name: response.title,
         image: response.image,
         summary:response.summary.replace(/<[^>]+>/g, ""),
         healthScore: response.healthScore,
-        stepByStep:response.steps,
+        stepByStep:response.instructions.replace(/<[^>]+>/g, ""),
         diets: response.diets
       }
-     res.status(200).json({msg:'todo funca', recetaGuardada})
+     res.status(200).json({msg:'todo funca', recipe})
     }
   } catch (error) {
     res.status(500).json({error:'no sirve', error})

@@ -19,7 +19,7 @@ const getRecipesName = async (id) => {
       return recipes
     } else {
       const apiRequest = await axios(
-        `https://api.spoonacular.com/recipes/complexSearch?query=${id}&apiKey=${API_KEY}`
+        `https://api.spoonacular.com/recipes/complexSearch?query=${id}&includeNutrition=true&addRecipeInformation=true&apiKey=${API_KEY}`
       );
       const response = apiRequest.data.results;
       const recetaGuardada = response.map((e) => {

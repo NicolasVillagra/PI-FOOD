@@ -9,7 +9,7 @@ const getDiets =async (req, res) => {
   
     //   // Si no se encuentran dietas, obténlas de la API y guárdalas en la base de datos
        if (diets.length === 0) {
-         const respuesta = await axios(`https://api.spoonacular.com/recipes/complexSearch?&addRecipeInformation=true&apiKey=${API_KEY}`);
+         const respuesta = await axios(`https://api.spoonacular.com/recipes/complexSearch?&number=300&addRecipeInformation=true&apiKey=${API_KEY}`);
         const dietsData = respuesta.data.results;
         await Diets.bulkCreate(dietsData.map((diet) => {
           return{name: diet.diets} }));

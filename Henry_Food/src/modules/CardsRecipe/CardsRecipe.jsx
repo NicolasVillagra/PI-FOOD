@@ -7,23 +7,26 @@ import styles from './CardsRecipe.module.css'
 const CardsRecipe =  (props) => {
  const [cards, setCards] = useState([])
  useEffect(() => {
-    axios.get('http://localhost:3001/recipes') // Reemplaza la URL con la API que estás utilizando
+    axios.get('http://localhost:3001/recipes') 
       .then(response => {
-        setCards(response.data); // Asigna los datos de las cards a la variable 'cards'
+        setCards(response.data); 
       })
       .catch(error => {
         console.error('Error al obtener los datos de la API:', error);
       });
   }, [])
+  console.log(cards.title);
+
 
   return (
     <div className={styles.containerRecipe}>
         {cards.map((item)=>{
             return <CardRecipe
-            key={item.id}
             image={item.image}
+            id={item.id}
             name={item.name}
             diets={item.diets}
+            key = {item.id}
             />
         })}
     </div>
