@@ -1,0 +1,62 @@
+.paginationContainer{
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+}
+.number{
+    background: black;
+    width: 27px;
+    height: 30px;
+    font-size: 20px;
+    font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+    color: white;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.numberContainer{
+    display: flex;
+    gap: 10px;
+}
+.arrow{
+    height: 20px;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    font-size: 17px;
+    padding: 1em 2.7em;
+    font-weight: 500;
+    background: #ffffff;
+    color: rgb(0, 0, 0);
+    border: none;
+    position: relative;
+    overflow: hidden;
+    border-radius: 0.6em;
+    display: flex;
+}
+.isNumber{
+    background: white;
+    width: 27px;
+    height: 30px;
+    font-size: 20px;
+    font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+    color: rgb(0, 0, 0);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.arrow.isDisabled{
+    height: 20px;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    font-size: 17px;
+    padding: 1em 2.7em;
+    font-weight: 500;
+    background: #000000;
+    color: rgba(0, 0, 0, 0.199);
+    border: none;
+    position: relative;
+    overflow: hidden;
+    border-radius: 0.6em;
+    display: flex;
+}

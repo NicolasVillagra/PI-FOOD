@@ -3,24 +3,32 @@ import axios from 'axios'
 import CardRecipe from '../Card/CardRecipe'
 import { useState } from 'react'
 import styles from './CardsRecipe.module.css'
+import Pagination from '../Pagination/Pagination'
 
 const CardsRecipe =  (props) => {
- const [cards, setCards] = useState([])
+ const [cards, setCards] = useState([]) //donde guardamos las cards
+ const [cardsPerPage, setCardsPerPage] = useState(9) //las cantidades de cards que se tienen que renderizar
+ const [currentPage, setcurrentPage] = useState(1) // el index inicial
+ const totalRecipe = cards.length
+ const lastIndex = currentPage * cardsPerPage
+  const firstIndex = lastIndex - cardsPerPage
  useEffect(() => {
     axios.get('http://localhost:3001/recipes') 
       .then(response => {
-        setCards(response.data); 
+        const recipes = response.data
+        setCards(recipes); 
       })
       .catch(error => {
         console.error('Error al obtener los datos de la API:', error);
       });
   }, [])
-  console.log(cards.title);
+
 
 
   return (
+    <div>
     <div className={styles.containerRecipe}>
-        {cards.map((item)=>{
+        {cards.slice(firstIndex,lastIndex).map((item)=>{
             return <CardRecipe
             image={item.image}
             id={item.id}
@@ -29,6 +37,11 @@ const CardsRecipe =  (props) => {
             key = {item.id}
             />
         })}
+    </div>
+    <Pagination cardsPerPage={cardsPerPage}
+     currentPage={currentPage}
+     setcurrentPage={setcurrentPage}
+      totalRecipe={totalRecipe}/>
     </div>
   )
 }

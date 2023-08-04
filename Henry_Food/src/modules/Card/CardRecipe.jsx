@@ -4,7 +4,6 @@ import { NavLink } from 'react-router-dom'
 
 const CardRecipe = (params) => {
     const {name,image,diets,id} = params
-    console.log(id);
   return (
     <div className={styles.cardContainer} key={id}>
         <div className={styles.card}>
