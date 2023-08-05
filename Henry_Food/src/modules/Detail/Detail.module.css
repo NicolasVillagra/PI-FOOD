@@ -4,20 +4,24 @@
     font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
 }
 .dataContainer{
-    width: 45%;
+    width: 50%;
     background: orange;
-    height: 560px;
+    height: 65rem;
     border-radius: 50px;
 }
 .stepContainer{
     display: flex;
-    background-color: black;
+    flex-direction: column;
+    color: white;
 }
 .dietsContainer{
     display: flex;
-    align-items: center;
-    justify-content: space-around;
+    align-items: flex-start;
+    justify-content: center;
     font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+    flex-direction: column;
+    color: white;
+    gap: 10px;
 }
 .dietsContainer h4{
     color: white;
@@ -32,7 +36,7 @@
     border-radius: 40px;
 }
 .recipeContainer{
-    height:754px;
+    height:1100px;
     margin: auto;
     display: flex;
     align-items: center;
@@ -41,4 +45,18 @@
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
+}
+.textHeader{
+    width: 200px;
+    height: 50px;
+    display: flex;
+    background-color: red;
+    align-items: center;
+    border-radius: 0 30px 0 18px;
+    justify-content: center;
+}
+.image{
+    width: 300px;
+    height: 300px;
+    border-radius: 65px;
 }

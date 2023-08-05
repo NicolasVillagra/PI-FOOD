@@ -1,10 +1,17 @@
 const {Recipe,Diets} = require('../db')
+const uuid = require('uuid');
 const postRecipe = async (req, res) => {
     try {
       const { id, name, summary, healthCore, stepByStep, diets } = req.body;
+      // Verificar si el ID es un UUID válido, si no, generarlo
+    let recipeId = id;
+    const isUUID = uuid.validate(id);
+    if (!isUUID) {
+      recipeId = uuid.v4(); // Genera un nuevo UUID
+    }
   
       // Crea la receta en la base de datos
-      const recipe = await Recipe.create({ id, name, summary, healthCore, stepByStep });
+      const recipe = await Recipe.create({ id:recipeId, name, summary, healthCore, stepByStep });
   
       // Buscar o crear los tipos de dieta y relacionarlos con la receta
       for (const tipoDietaNombre of diets) {
@@ -19,7 +26,7 @@ const postRecipe = async (req, res) => {
       res.status(201).json(recipe);
     } catch (err) {
       console.error(err);
-      res.status(500).json({ error: 'Error del servidor' });
+      res.status(500).json({ error: 'Error del servidor',err });
     }
   }
   module.exports ={postRecipe}

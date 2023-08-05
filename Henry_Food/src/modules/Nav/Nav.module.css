@@ -24,3 +24,10 @@ h1{
 
     
 }
+.navItem{
+    display:flex;
+    font-size: 20px;
+    font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+    color: white;
+    gap: 10px;
+}

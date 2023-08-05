@@ -1,0 +1,36 @@
+.formContainer{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    width: 400px;
+    height: 800px;
+    background: url('./../../assets/Form2.jpg');
+    background-size: cover;
+    background-position:left;
+    margin: auto;
+    border-radius: 20px;
+}
+h2{
+    color: white;
+}
+label{
+    color: white;
+    font-size: 15px;
+}
+input{
+    border-radius: 30px;
+}
+.summary{
+    display: flex;
+    justify-content: flex-start;
+    height: 60px;
+    border-radius: 0;
+}
+select{
+    height: 30px;
+    width: 190px;
+}
+.error{
+    color: red;
+}
