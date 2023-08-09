@@ -1,14 +1,13 @@
-import { CREATE_POST } from "./types";
-import axios from 'axios'
-
-const apiUrl = 'http://localhost:3001/recipes'
+import { RESET_FORM_DATA } from "./types";
+import { UPDATE_FORM_DATA } from "./types";
 
 
-export const createPost = (postData) => async (dispatch) => {
-    try {
-      const response = await axios.post(apiUrl, postData);
-      dispatch({ type: CREATE_POST, payload: response.data });
-    } catch (error) {
-     console.log(error);
-    }
-  };
+
+export const updateFormData = (data) => ({
+  type: UPDATE_FORM_DATA,
+  payload: data,
+});
+
+export const resetFormData = () => ({
+  type: RESET_FORM_DATA,
+});

@@ -1,6 +1,5 @@
 export const validate = (inputs) =>{
     const errores = {}
-    const array = Object.values(errores)
     if (inputs.name === "") {
         errores.name = 'El nombre es obligatorio';
      }
@@ -12,7 +11,7 @@ export const validate = (inputs) =>{
      }
      if (inputs.summary === "") {
       errores.summary = 'Tienes que poner un resumen de la receta';
-    } else if (inputs.summary.length < 5 ) {
+    } else if (inputs.summary < 5 ) {
       errores.summary = 'El resumen es muy corto';
     } if (inputs.healthScore === "" || inputs.healthScore.length < 0 || inputs.healthScore === 0) {
       errores.healthScore = 'Tienes que poner el healthScore';

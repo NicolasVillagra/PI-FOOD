@@ -3,8 +3,13 @@ import styles from './PostRecipe.module.css'
 import { useState } from 'react'
 import { validate } from './validation'
 import axios from 'axios'
+import {useSelector, useDispatch} from 'react-redux'
+import { updateFormData } from '../../redux/actions'
+
 
 const PostRecipe = () => {
+  const globalData = useSelector(state => state.Post)
+  const dispatch = useDispatch()
     const initialState ={
         name:'',
         summary:'',
@@ -24,12 +29,12 @@ const PostRecipe = () => {
     try {
         await axios.post('http://localhost:3001/recipes', formData)
         setFormData(initialState)
+        dispatch(updateFormData(formData))
         setErrors(errors)  
     } catch (error) {
        console.log({error:"no se pudo hacer la peticion", error}); 
     }
   }
-
 
   return (
     <div>

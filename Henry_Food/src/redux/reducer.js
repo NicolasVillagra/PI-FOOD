@@ -1,4 +1,4 @@
-import { CREATE_POST } from "./types";
+import { UPDATE_FORM_DATA, RESET_FORM_DATA } from './types';
 
 export const initialState = {
     Post:[]
@@ -6,8 +6,10 @@ export const initialState = {
 
 export const reducer = (state = initialState, action) => {
     switch (action.type) {
-        case CREATE_POST:
-            return [...state.Post ,action.payload]
+        case UPDATE_FORM_DATA:
+            return { ...state, Post: [...state.Post,action.payload] }
+        case RESET_FORM_DATA:
+            return state.Post    
       default:
         return state;
     }

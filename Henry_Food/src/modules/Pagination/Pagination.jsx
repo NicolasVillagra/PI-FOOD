@@ -16,7 +16,6 @@ const Pagination = ({cardsPerPage,currentPage,setcurrentPage,totalRecipe}) => {
     const onSpecifPage = (n)=>{
         setcurrentPage(n)
     }
-    console.log(currentPage);
   return (
     <div>
  <nav className={styles.paginationContainer}>
