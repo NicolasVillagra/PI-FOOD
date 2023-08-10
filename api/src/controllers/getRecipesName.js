@@ -2,7 +2,9 @@ const { Recipe, Diets } = require("../db");
 const axios = require("axios");
 const { Op } = require("sequelize");
 require('dotenv').config();
-const {API_KEY} = process.env;
+const {API_KEY , API_KEY_TWO} = process.env;
+
+const apiKey = API_KEY_TWO
 
 const getRecipesName = async (id) => {
   // const { name } = req.query;
@@ -19,7 +21,7 @@ const getRecipesName = async (id) => {
       return recipes
     } else {
       const apiRequest = await axios(
-        `https://api.spoonacular.com/recipes/complexSearch?query=${id}&includeNutrition=true&addRecipeInformation=true&apiKey=${API_KEY}`
+        `https://api.spoonacular.com/recipes/complexSearch?query=${id}&includeNutrition=true&addRecipeInformation=true&apiKey=${apiKey}`
       );
       const response = apiRequest.data.results;
       const recetaGuardada = response.map((e) => {

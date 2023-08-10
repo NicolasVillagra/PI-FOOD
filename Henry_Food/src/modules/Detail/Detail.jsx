@@ -5,14 +5,14 @@ import styles from './Detail.module.css'
 
 
 const Detail = () => {
-const [recipe, setRecipe] = useState([])
+const [recipe, setRecipe] = useState({})
 const params =useParams()
 const {id} = params
 useEffect(() => {
     axios(`http://localhost:3001/recipes/${id}`)
       .then((response) => {
         if (response.data) {
-          setRecipe(response.data.recipe);
+          setRecipe(response.data);
           console.log(response.data.recipe);
         } else {
           window.alert("No hay receta con ese id");
@@ -23,7 +23,7 @@ useEffect(() => {
     return () => {
       console.log("Me desmonto, adios!");
     };
-  }, [])
+  }, [id])
   console.log(recipe);
   return (
     <div className={styles.recipeContainer}>

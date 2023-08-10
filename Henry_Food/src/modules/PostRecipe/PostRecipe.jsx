@@ -16,25 +16,40 @@ const PostRecipe = () => {
         healthScore:0,
         stepByStep:'',
         image:'',
-        diets:''
+        diets:[],
     }
     const [formData, setFormData] = useState(initialState)
     const [errors, setErrors] = useState({})
-      const handleChange = (event) =>{
-    setErrors(validate({...formData,[event.target.name]:event.target.value}))
-    setFormData({...formData,[event.target.name]:event.target.value})
-  }
-  const handleSubmit = async (e)=>{
-    e.preventDefault()
-    try {
-        await axios.post('http://localhost:3001/recipes', formData)
-        setFormData(initialState)
-        dispatch(updateFormData(formData))
-        setErrors(errors)  
-    } catch (error) {
-       console.log({error:"no se pudo hacer la peticion", error}); 
-    }
-  }
+    const handleChange = (event) => {
+      const { name, value, type } = event.target;
+    
+      if (type === 'select-multiple') {
+        const selectedOptions = Array.from(event.target.selectedOptions, option => option.value);
+        setFormData({ ...formData, [name]: selectedOptions });
+      } else {
+        setFormData({ ...formData, [name]: value });
+      }
+    
+      setErrors(validate({ ...formData, [name]: value }));
+    };
+    const handleSubmit = async (e) => {
+      e.preventDefault();
+      try {
+        await axios.post('http://localhost:3001/recipes', {
+          name: formData.name,
+          summary: formData.summary,
+          healthScore: formData.healthScore, // Asegúrate de que la propiedad sea healthCore o saludCore, como lo tengas definido
+          stepByStep: formData.stepByStep,
+          diets: formData.diets,
+        });
+        
+        setFormData(initialState);
+        dispatch(updateFormData(formData));
+        setErrors({});
+      } catch (error) {
+        console.log({ errorMsg: 'no se pudo hacer la peticion', error });
+      }
+    };
 
   return (
     <div>
@@ -62,19 +77,20 @@ const PostRecipe = () => {
             <p className={styles.error}>{errors.image}</p>
 
             <label htmlFor="">Seleccion tu dieta</label>
-            <select onChange={handleChange} name='diets'value={formData.diets}>
+            <select onChange={handleChange} name='diets'value={formData.diets} multiple={true}>
                 <option value=""></option>
-                <option value="gluten Free">gluten Free</option>
-                <option value="Ketogenic">Ketogenic</option>
-                <option value="Vegetarian">Vegetarian</option>
-                <option value="Lacto-Vegetarian">Lacto-Vegetarian</option>
-                <option value="Ovo-Vegetarian">Ovo-Vegetarian</option>
-                <option value="Vegan">Vegan</option>
-                <option value="Pescetarian">Pescetarian</option>
-                <option value="Paleo">Paleo</option>
-                <option value="Primal">Primal</option>
-                <option value="Low FODMAP">Low FODMAP</option>
-                <option value="Whole30">Whole30</option>
+                <option value="gluten free">Gluten Free</option>
+                <option value="ketogenic">Ketogenic</option>
+                <option value="vegetarian">Vegetarian</option>
+                <option value="lacto ovo vegetarian">Lacto-Vegetarian</option>
+                <option value="ovo vegetarian">Ovo-Vegetarian</option>
+                <option value="vegan">Vegan</option>
+                <option value="pescetarian">Pescetarian</option>
+                <option value="paleolithic">Paleolithic</option>
+                <option value="primal">Primal</option>
+                <option value="fodmap friendly">Low FODMAP</option>
+                <option value="whole 30">Whole30</option>
+                <option value="dairy free">Dairy free</option>
             </select>
             <p className={styles.error}>{errors.diets}</p>
             <button>Crear</button>

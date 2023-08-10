@@ -8,7 +8,9 @@ import { useSelector } from 'react-redux'
 
 const CardsRecipe =  (props) => {
  const recipeDb = useSelector(state => state.Post)
- const [cards, setCards] = useState([]) //donde guardamos las cards
+ const [cards, setCards] = useState([]) // donde guardamos las cards para su filtrado
+ const [originalState, setOriginalState] = useState([]) // guardamos el estado origianl
+ const [orderedCards, setOrderedCards] = useState([]); // Guardamos la lista ordenada
  const [dietsFilter, setDietsFilter] = useState("") // donde guardamos las dietas
  const [cardsPerPage, setCardsPerPage] = useState(9) //las cantidades de cards que se tienen que renderizar
  const [currentPage, setcurrentPage] = useState(1) // el index inicial
@@ -18,39 +20,55 @@ const CardsRecipe =  (props) => {
     axios.get('http://localhost:3001/recipes') 
       .then(response => {
         const recipes = response.data
-        const DbAndApi = [...recipes,...recipeDb]
-        setCards(DbAndApi);
+        setCards(recipes);
+        setOriginalState(recipes)
       })
       .catch(error => {
         console.error('Error al obtener los datos de la API:', error);
       });
   }, [])
   const orderArrayAtoZ = ()=>{
-    const arrayAtoZ = filteredCards.sort((a,b)=>a.name.localeCompare(b.name))
-    setCards(arrayAtoZ)
+    const arrayAtoZ = [...filteredCards].sort((a,b)=>a.name.localeCompare(b.name))
+    setOrderedCards(arrayAtoZ)
    
     
   }
     const orderArrayZtoA = ()=>{
-    const arrayZtoA = filteredCards.sort((a,b)=>b.name.localeCompare(a.name))
-    setCards(arrayZtoA)
+    const arrayZtoA = [...filteredCards].sort((a,b)=>b.name.localeCompare(a.name))
+    setOrderedCards(arrayZtoA)
 
     
   }
   const handleChange = (event)=>{
     setDietsFilter(event.target.value.toLowerCase())
   }
-  const filteredCards = dietsFilter // si existe algun valor en el estado diets
-  ? cards.filter(recipe => recipe.diets.includes(dietsFilter))
+  const filteredCards = dietsFilter
+  ? cards.filter(recipe =>
+      recipe.diets.some(diet => {
+        if (typeof diet === 'string') {
+          return diet.toLowerCase().includes(dietsFilter);
+        } else if (typeof diet === 'object' && diet.name) {
+          return diet.name.toLowerCase().includes(dietsFilter);
+        }
+        return false; // Otros tipos no son considerados en el filtro
+      })
+    )
   : cards;
+
   const totalRecipeFilter = filteredCards.length //muestra la cantidad de paginas
+  const filterToDb =()=>{
+    const filter = originalState.filter((e)=>typeof e.id === 'string')
+    setCards(filter)
+  }
+  const filterToApi = ()=>{
+    const filter = originalState.filter(e => typeof e.id !== 'string')
+    setCards(filter)
+  }
+   useEffect(() => {
+        setCards(orderedCards);
+    }, [orderedCards]);
 
-
-
-  //ARREGLAR FILTRO , LAS DIETAS ESTAN MAL BRO
-
-
-
+console.log(cards)
 
   return (
     <div>
@@ -60,25 +78,26 @@ const CardsRecipe =  (props) => {
         <button className={styles.button} onClick={orderArrayZtoA}>Ordernar de Z-A</button>
         </div>
         <div>
-          <button >DataBase</button>
-          <button >API</button>
+          <button onClick={filterToDb} >DataBase</button>
+          <button onClick={filterToApi} >API</button>
         </div>
       </div>
       <div>
         <label>filtrar por tipo de dieta</label>
       <select onChange={handleChange} name='diets'value={dietsFilter}>
                 <option value="">Todas</option>
-                <option value="gluten Free">gluten Free</option>
+                <option value="gluten Free">Gluten Free</option>
                 <option value="ketogenic">Ketogenic</option>
                 <option value="Vegetarian">Vegetarian</option>
-                <option value="Lacto-Vegetarian">Lacto-Vegetarian</option>
-                <option value="Ovo-Vegetarian">Ovo-Vegetarian</option>
+                <option value="lacto ovo vegetarian">Lacto-Vegetarian</option>
+                <option value="Ovo Vegetarian">Ovo-Vegetarian</option>
                 <option value="Vegan">Vegan</option>
                 <option value="Pescetarian">Pescetarian</option>
-                <option value="Paleo">Paleo</option>
+                <option value="paleolithic">Paleolithic</option>
                 <option value="Primal">Primal</option>
-                <option value="Low FODMAP">Low FODMAP</option>
-                <option value="Whole30">Whole30</option>
+                <option value="Fodmap Friendly">Low FODMAP</option>
+                <option value="Whole 30">Whole30</option>
+                <option value="dairy free">Dairy free</option>
             </select>
       </div>
     <div className={styles.containerRecipe}>
