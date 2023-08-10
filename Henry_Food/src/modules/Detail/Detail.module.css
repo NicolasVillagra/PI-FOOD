@@ -60,3 +60,9 @@
     height: 300px;
     border-radius: 65px;
 }
+.footer{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 215px;
+}

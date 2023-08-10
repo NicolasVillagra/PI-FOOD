@@ -29,6 +29,7 @@ const getRecipesName = async (id) => {
           id: e.id,
           name: e.title,
           image: e.image,
+          diets: e.diets
         };
       });
       return recetaGuardada

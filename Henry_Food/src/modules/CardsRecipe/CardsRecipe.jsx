@@ -77,13 +77,13 @@ const CardsRecipe =  ({updateCards}) => {
   return (
     <div>
       <div className={styles.selector}>
-        <div>
+        <div className={styles.buttonContainer}>
         <button className={styles.button} onClick={orderArrayAtoZ}>Ordenar de A-Z</button>
         <button className={styles.button} onClick={orderArrayZtoA}>Ordernar de Z-A</button>
         </div>
-        <div>
-          <button onClick={filterToDb} >DataBase</button>
-          <button onClick={filterToApi} >API</button>
+        <div className={styles.buttonContainer}>
+          <button className={styles.button} onClick={filterToDb} >DataBase</button>
+          <button className={styles.button} onClick={filterToApi} >API</button>
         </div>
       </div>
       <div>

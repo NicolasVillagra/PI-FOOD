@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import './App.css'
-import { Route } from 'react-router-dom'
+import { Route , useLocation } from 'react-router-dom'
 import { Routes } from 'react-router-dom'
 import Home from './modules/Home/Home'
 import Nav from './modules/Nav/Nav'
@@ -9,12 +9,12 @@ import Detail from './modules/Detail/Detail'
 import PostRecipe from './modules/PostRecipe/PostRecipe'
 
 function App() {
-  const [count, setCount] = useState(0)
-
+  const location = useLocation();
+  const isHome = location.pathname === '/'; // para que no se muestran las nav
 
   return (
     <div className='App'>
-      <Nav/>
+      {!isHome && <Nav />}
       <Routes>
         <Route path='/' element={<Home/>}/>
         <Route path='/Home' element={<Landing/>}/>

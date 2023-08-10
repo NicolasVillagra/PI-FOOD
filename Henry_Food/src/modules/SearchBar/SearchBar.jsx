@@ -17,7 +17,7 @@ const SearchBar = ({ updateCards }) => {
         axios.get(`http://localhost:3001/recipes?name=${name}`) 
           .then(response => {
             const recipes = response.data
-            dispatch(updateFormData(recipes))
+            dispatch(updateFormData(recipes)) // actualizo el estado global
           })
           .catch(error => {
             console.error('Error al obtener los datos de la API:', error);
