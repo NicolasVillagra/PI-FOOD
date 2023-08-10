@@ -4,10 +4,12 @@ import CardRecipe from '../Card/CardRecipe'
 import { useState } from 'react'
 import styles from './CardsRecipe.module.css'
 import Pagination from '../Pagination/Pagination'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
+import { updateFormData } from '../../redux/actions'
 
-const CardsRecipe =  (props) => {
+const CardsRecipe =  ({updateCards}) => {
  const recipeDb = useSelector(state => state.Post)
+ const dispatch = useDispatch()
  const [cards, setCards] = useState([]) // donde guardamos las cards para su filtrado
  const [originalState, setOriginalState] = useState([]) // guardamos el estado origianl
  const [orderedCards, setOrderedCards] = useState([]); // Guardamos la lista ordenada
@@ -20,6 +22,7 @@ const CardsRecipe =  (props) => {
     axios.get('http://localhost:3001/recipes') 
       .then(response => {
         const recipes = response.data
+        dispatch(updateFormData(recipes))
         setCards(recipes);
         setOriginalState(recipes)
       })
@@ -43,32 +46,33 @@ const CardsRecipe =  (props) => {
     setDietsFilter(event.target.value.toLowerCase())
   }
   const filteredCards = dietsFilter
-  ? cards.filter(recipe =>
+  ? recipeDb.filter(recipe =>
       recipe.diets.some(diet => {
         if (typeof diet === 'string') {
           return diet.toLowerCase().includes(dietsFilter);
-        } else if (typeof diet === 'object' && diet.name) {
+        } else if (typeof diet === 'object' && diet.name) { //para las dietas de la DB
           return diet.name.toLowerCase().includes(dietsFilter);
         }
         return false; // Otros tipos no son considerados en el filtro
       })
     )
-  : cards;
+  : recipeDb;
 
   const totalRecipeFilter = filteredCards.length //muestra la cantidad de paginas
   const filterToDb =()=>{
     const filter = originalState.filter((e)=>typeof e.id === 'string')
-    setCards(filter)
+    dispatch(updateFormData(filter))
   }
   const filterToApi = ()=>{
     const filter = originalState.filter(e => typeof e.id !== 'string')
-    setCards(filter)
+    dispatch(updateFormData(filter))
   }
    useEffect(() => {
-        setCards(orderedCards);
+    dispatch(updateFormData(orderedCards));
     }, [orderedCards]);
+    console.log(recipeDb);
 
-console.log(cards)
+
 
   return (
     <div>

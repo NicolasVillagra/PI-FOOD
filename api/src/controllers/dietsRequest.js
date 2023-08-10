@@ -6,12 +6,12 @@ const {API_KEY , API_KEY_TWO} = process.env;
 const apiKey = API_KEY_TWO
 
 const getDiets = async (req, res) => {
-  try {
+
     // Verifico si existen dietas en la base de datos
     const diets = await Diets.findAll();
 
     // Si no se encuentran dietas
-
+    if (diets.length === 0) {
       const respuesta = await axios(`https://api.spoonacular.com/recipes/complexSearch?&number=300&addRecipeInformation=true&includeNutrition=true&apiKey=${apiKey}`);
       const dietsData = respuesta.data.results;
 
@@ -31,13 +31,11 @@ const getDiets = async (req, res) => {
       await Diets.bulkCreate(uniqueDietsArray.map((diet) => {
         return { name: diet };
       }));
-    
+    }
 
     const updatedDiets = await Diets.findAll();
-    res.status(200).json({ updatedDiets });
-  } catch (err) {
-    res.status(500).json({ error: 'Error del servidor', err });
-  }
+    return updatedDiets
+
 }
 
 module.exports = { getDiets };

@@ -44,7 +44,6 @@ const PostRecipe = () => {
         });
         
         setFormData(initialState);
-        dispatch(updateFormData(formData));
         setErrors({});
       } catch (error) {
         console.log({ errorMsg: 'no se pudo hacer la peticion', error });

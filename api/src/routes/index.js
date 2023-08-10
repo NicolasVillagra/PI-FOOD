@@ -11,6 +11,8 @@ const {getRecipesName} = require('../controllers/getRecipesName')
 const {postRecipe} = require('../controllers/postRecipes')
 const {getAllRecipes} = require('../controllers/getAllRecipes')
 const {getRecipesHandler,getRecipeByIdHandler} = require('../handlers/recipeHandle')
+const {allDiets} = require ('../handlers/dietsHandler')
+
 
 
 const router = Router();
@@ -23,7 +25,7 @@ router.get('/recipes', getRecipesHandler);
 router.post('/recipes', postRecipe);
   
   // Ruta para obtener todos los tipos de dietas
-router.get('/diets',getDiets);
+router.get('/diets',allDiets);
 router.get('/getAllRecipes',getAllRecipes)
 
 module.exports = router;

@@ -7,7 +7,7 @@ export const initialState = {
 export const reducer = (state = initialState, action) => {
     switch (action.type) {
         case UPDATE_FORM_DATA:
-            return { ...state, Post: [...state.Post,action.payload] }
+            return { ...state, Post: action.payload }
         case RESET_FORM_DATA:
             return state.Post    
       default:
