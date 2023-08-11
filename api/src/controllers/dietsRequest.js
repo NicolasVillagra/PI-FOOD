@@ -1,9 +1,9 @@
 const { Recipe, Diets } = require('../db');
 const axios = require('axios');
 require('dotenv').config();
-const {API_KEY , API_KEY_TWO} = process.env;
+const {apiKey} = require ('./apiKey')
 
-const apiKey = API_KEY_TWO
+
 
 const getDiets = async (req, res) => {
 

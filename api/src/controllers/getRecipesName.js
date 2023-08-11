@@ -2,12 +2,14 @@ const { Recipe, Diets } = require("../db");
 const axios = require("axios");
 const { Op } = require("sequelize");
 require('dotenv').config();
-const {API_KEY , API_KEY_TWO} = process.env;
+const {API_KEY_THREE} = process.env;
 
-const apiKey = API_KEY_TWO
+const apiKey = API_KEY_THREE
 
 const getRecipesName = async (id) => {
-  // const { name } = req.query;
+  if (typeof id !== 'string') {
+    throw new Error('El parámetro debe ser un string');
+  }
   const recipes = await Recipe.findAll({
     where: {
       name: {
