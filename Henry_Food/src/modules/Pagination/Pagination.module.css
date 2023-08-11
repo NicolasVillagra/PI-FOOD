@@ -46,17 +46,24 @@
     align-items: center;
     justify-content: center;
 }
-.arrow.isDisabled{
+.isDisabled{
     height: 20px;
     font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
     font-size: 17px;
     padding: 1em 2.7em;
     font-weight: 500;
-    background: #000000;
-    color: rgba(0, 0, 0, 0.199);
+    background: #ce3737;
+    color: rgba(0, 0, 0, 0.664);
     border: none;
     position: relative;
     overflow: hidden;
     border-radius: 0.6em;
     display: flex;
+    cursor: not-allowed;
 }
+.numberPage{
+    color: #ffffff;
+}
+.numberPage.active {
+    color: #ff0000; /* Cambia este color al que quieras para resaltar la página actual */
+  }

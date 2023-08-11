@@ -3,13 +3,10 @@ import styles from './PostRecipe.module.css'
 import { useState } from 'react'
 import { validate } from './validation'
 import axios from 'axios'
-import {useSelector, useDispatch} from 'react-redux'
-import { updateFormData } from '../../redux/actions'
+import { useEffect } from 'react'
 
 
 const PostRecipe = () => {
-  const globalData = useSelector(state => state.Post)
-  const dispatch = useDispatch()
     const initialState ={
         name:'',
         summary:'',
@@ -18,8 +15,25 @@ const PostRecipe = () => {
         image:'',
         diets:[],
     }
+    const [isSubmitEnabled, setIsSubmitEnabled] = useState(false);
     const [formData, setFormData] = useState(initialState)
     const [errors, setErrors] = useState({})
+    const [existingRecipes, setExistingRecipes] = useState([]);
+    
+    // no se guarden recetas repetidas
+    useEffect(() => {
+      const fetchExistingRecipes = async () => {
+        try {
+          const response = await axios.get('http://localhost:3001/recipes'); // Ajusta la URL según tu API
+          setExistingRecipes(response.data);
+        } catch (error) {
+          console.log('Error fetching existing recipes:', error);
+        }
+      };
+    
+      fetchExistingRecipes();
+    }, []);
+
     const handleChange = (event) => {
       const { name, value, type } = event.target;
     
@@ -29,11 +43,21 @@ const PostRecipe = () => {
       } else {
         setFormData({ ...formData, [name]: value });
       }
-    
+
+      const validationErrors = validate({ ...formData, [name]: value });
       setErrors(validate({ ...formData, [name]: value }));
+      const isValid = Object.keys(validationErrors).length === 0; // Verifica si no hay errores
+      setIsSubmitEnabled(isValid);
+    
     };
     const handleSubmit = async (e) => {
       e.preventDefault();
+      const recipeName = formData.name.trim();
+     if (existingRecipes.some((recipe) => recipe.name === recipeName)) {
+      window.alert('ya existe esta receta');
+      // Puedes mostrar un mensaje de error o realizar alguna acción aquí
+      return;
+    }
       try {
         await axios.post('http://localhost:3001/recipes', {
           name: formData.name,
@@ -45,6 +69,7 @@ const PostRecipe = () => {
         
         setFormData(initialState);
         setErrors({});
+        setExistingRecipes([...existingRecipes, { name: recipeName }]); // guarda la receta creada
       } catch (error) {
         console.log({ errorMsg: 'no se pudo hacer la peticion', error });
       }
@@ -76,7 +101,7 @@ const PostRecipe = () => {
             <p className={styles.error}>{errors.image}</p>
 
             <label htmlFor="">Seleccion tu dieta</label>
-            <select onChange={handleChange} name='diets'value={formData.diets} multiple={true}>
+            <select className={styles.dietsContainer} onChange={handleChange} name='diets'value={formData.diets} multiple={true}>
                 <option value=""></option>
                 <option value="gluten free">Gluten Free</option>
                 <option value="ketogenic">Ketogenic</option>
@@ -92,7 +117,7 @@ const PostRecipe = () => {
                 <option value="dairy free">Dairy free</option>
             </select>
             <p className={styles.error}>{errors.diets}</p>
-            <button>Crear</button>
+            <button className={`${styles.button} ${isSubmitEnabled ? '' : styles.disabledButton}`} disabled={!isSubmitEnabled}>Crear</button>
         </form>
     </div>
   )

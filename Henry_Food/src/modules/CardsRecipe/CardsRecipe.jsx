@@ -1,76 +1,34 @@
 import React, { useEffect } from 'react'
-import axios from 'axios'
 import CardRecipe from '../Card/CardRecipe'
-import { useState } from 'react'
 import styles from './CardsRecipe.module.css'
 import Pagination from '../Pagination/Pagination'
-import { useSelector, useDispatch } from 'react-redux'
-import { updateFormData } from '../../redux/actions'
+import { useRecipesData } from '../utils/hooks'
 
 const CardsRecipe =  ({updateCards}) => {
- const recipeDb = useSelector(state => state.Post)
- const dispatch = useDispatch()
- const [cards, setCards] = useState([]) // donde guardamos las cards para su filtrado
- const [originalState, setOriginalState] = useState([]) // guardamos el estado origianl
- const [orderedCards, setOrderedCards] = useState([]); // Guardamos la lista ordenada
- const [dietsFilter, setDietsFilter] = useState("") // donde guardamos las dietas
- const [cardsPerPage, setCardsPerPage] = useState(9) //las cantidades de cards que se tienen que renderizar
- const [currentPage, setcurrentPage] = useState(1) // el index inicial
- const lastIndex = currentPage * cardsPerPage
-  const firstIndex = lastIndex - cardsPerPage
- useEffect(() => {
-    axios.get('http://localhost:3001/recipes') 
-      .then(response => {
-        const recipes = response.data
-        dispatch(updateFormData(recipes))
-        setCards(recipes);
-        setOriginalState(recipes)
-      })
-      .catch(error => {
-        console.error('Error al obtener los datos de la API:', error);
-      });
-  }, [])
-  const orderArrayAtoZ = ()=>{
-    const arrayAtoZ = [...filteredCards].sort((a,b)=>a.name.localeCompare(b.name))
-    setOrderedCards(arrayAtoZ)
-   
-    
-  }
-    const orderArrayZtoA = ()=>{
-    const arrayZtoA = [...filteredCards].sort((a,b)=>b.name.localeCompare(a.name))
-    setOrderedCards(arrayZtoA)
+  const {
+    cards,
+    firstIndex,
+    dietsFilter,
+    cardsPerPage,
+    currentPage,
+    filteredCards,
+    totalRecipeFilter,
+    fetchData,
+    orderArrayAtoZ,
+    orderArrayZtoA,
+    handleChange,
+    filterToDb,
+    filterToApi,
+    setcurrentPage,
+    lastIndex
+  } = useRecipesData();
 
-    
-  }
-  const handleChange = (event)=>{
-    setDietsFilter(event.target.value.toLowerCase())
-  }
-  const filteredCards = dietsFilter
-  ? recipeDb.filter(recipe =>
-      recipe.diets.some(diet => {
-        if (typeof diet === 'string') {
-          return diet.toLowerCase().includes(dietsFilter);
-        } else if (typeof diet === 'object' && diet.name) { //para las dietas de la DB
-          return diet.name.toLowerCase().includes(dietsFilter);
-        }
-        return false; // Otros tipos no son considerados en el filtro
-      })
-    )
-  : recipeDb;
 
-  const totalRecipeFilter = filteredCards.length //muestra la cantidad de paginas
-  const filterToDb =()=>{
-    const filter = originalState.filter((e)=>typeof e.id === 'string')
-    dispatch(updateFormData(filter))
-  }
-  const filterToApi = ()=>{
-    const filter = originalState.filter(e => typeof e.id !== 'string')
-    dispatch(updateFormData(filter))
-  }
-   useEffect(() => {
-    dispatch(updateFormData(orderedCards));
-    }, [orderedCards]);
-    console.log(recipeDb);
+useEffect(() => {
+  fetchData();
+}, []);
+
+ 
 
 
 
