@@ -34,10 +34,11 @@ module.exports = (sequelize) => {
     },
     image: {
       type: DataTypes.STRING,
+      defaultValue:
+      "https://static.vecteezy.com/system/resources/thumbnails/002/111/155/small/italian-food-ingredients-frame-free-photo.jpg",
       allowNull: true,
     },
     
   },{timestamps:false});
-  return
   
 };

@@ -7,21 +7,18 @@ const {API_KEY_THREE} = process.env;
 const apiKey = API_KEY_THREE
 
 const getRecipesName = async (id) => {
-  if (typeof id !== 'string') {
+  if (typeof id !== 'string') { 
     throw new Error('El parámetro debe ser un string');
   }
   const recipes = await Recipe.findAll({
     where: {
       name: {
-        [Op.iLike]: `%${id}%`,
+        [Op.iLike]: `%${id}%`, //sin importar mayusculas o minusculas
       },
     },
     include: [Diets],
   });
 
-    if (recipes.length > 0) {
-      return recipes
-    } else {
       const apiRequest = await axios(
         `https://api.spoonacular.com/recipes/complexSearch?query=${id}&includeNutrition=true&addRecipeInformation=true&apiKey=${apiKey}`
       );
@@ -34,8 +31,9 @@ const getRecipesName = async (id) => {
           diets: e.diets
         };
       });
-      return recetaGuardada
-    }
+      const allRecipes = [...recipes,...recetaGuardada] //uno la api con la db
+      return allRecipes
+    
 
 }
 module.exports = { getRecipesName };

@@ -1,17 +1,15 @@
 const { Recipe, Diets } = require('../db');
 const axios = require('axios');
 require('dotenv').config();
-const {apiKey} = require ('./apiKey')
+const {API_KEY_THREE} = process.env;
+
+const apiKey = API_KEY_THREE
 
 
 
 const getDiets = async (req, res) => {
 
-    // Verifico si existen dietas en la base de datos
-    const diets = await Diets.findAll();
 
-    // Si no se encuentran dietas
-    if (diets.length === 0) {
       const respuesta = await axios(`https://api.spoonacular.com/recipes/complexSearch?&number=300&addRecipeInformation=true&includeNutrition=true&apiKey=${apiKey}`);
       const dietsData = respuesta.data.results;
 
@@ -31,7 +29,7 @@ const getDiets = async (req, res) => {
       await Diets.bulkCreate(uniqueDietsArray.map((diet) => {
         return { name: diet };
       }));
-    }
+    
 
     const updatedDiets = await Diets.findAll();
     return updatedDiets

@@ -1,6 +1,5 @@
 const axios = require('axios')
 const {Recipe} = require('../db')
-const { validate: isUUID } = require('uuid');
 const {Diets} = require('../db');
 require('dotenv').config();
 const {API_KEY_TWO} = process.env;
@@ -10,7 +9,7 @@ const apiKey =API_KEY_TWO
 const getRecipe =async (req,res)=>{
   const {idRecipe} = req.params
   try {
-    if(isUUID(idRecipe)){
+    if(typeof idRecipe === 'string'){
       const recipeDb = await Recipe.findByPk(idRecipe,{include: {
         model: Diets, // Incluir el modelo Diet en la consulta
         attributes: ['name'], // Especificar qué atributos de Diet deseas incluir

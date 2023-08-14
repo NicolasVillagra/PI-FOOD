@@ -6,7 +6,7 @@ import { useDispatch } from 'react-redux'
 import { updateFormData } from '../../redux/actions'
 
 
-const SearchBar = ({ updateCards }) => {
+const SearchBar = () => {
    const dispatch = useDispatch()
     const [name, setName] = useState('')
     const handleChange = (event) => {
@@ -21,9 +21,9 @@ const SearchBar = ({ updateCards }) => {
           })
           .catch(error => {
             console.error('Error al obtener los datos de la API:', error);
+            
           });
       }
-      console.log(name);
 
   return (
     <div className={styles.inputGroup}>
