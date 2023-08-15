@@ -2,7 +2,7 @@
 export const filterDiets = (recetas, dietsFilter) => {
     return recetas.filter(recipe =>
       recipe.diets.some(diet => {
-        if (typeof diet === 'string') {  //verifico si la dieta recibida es un stringo un objeto
+        if (typeof diet === 'string') {   //verifico si la dieta recibida es un stringo un objeto
           return diet.toLowerCase().includes(dietsFilter);
         } else if (typeof diet === 'object' && diet.name) {
           return diet.name.toLowerCase().includes(dietsFilter);

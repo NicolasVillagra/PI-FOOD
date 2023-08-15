@@ -8,7 +8,6 @@ import { useDispatch } from 'react-redux'
 
 const CardsRecipe =  () => {
   const {
-    cards,
     firstIndex,
     dietsFilter,
     cardsPerPage,

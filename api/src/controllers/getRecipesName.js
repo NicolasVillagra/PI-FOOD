@@ -11,9 +11,9 @@ const getRecipesName = async (id) => {
     throw new Error('El parámetro debe ser un string');
   }
   const recipes = await Recipe.findAll({
-    where: {
+    where: { //que atributo busco
       name: {
-        [Op.iLike]: `%${id}%`, //sin importar mayusculas o minusculas
+        [Op.iLike]: `%${id}%`, // uso el operador,sin importar mayusculas o minusculas
       },
     },
     include: [Diets],

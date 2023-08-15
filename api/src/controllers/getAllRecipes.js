@@ -19,9 +19,8 @@ const getAllRecipes = async() =>{
             diets: response.diets
         }})
         const recipeDb = await Recipe.findAll({
-            // Cambia el criterio de búsqueda según tus necesidades
-            include: {
-              model: Diets, // Incluir el modelo Diet en la consulta
+            include: { //incluyo el modelo de las dietas tuki
+              model: Diets, 
               attributes: ['name'], // Especificar qué atributos de Diet deseas incluir
               raw: true, // Indicar que solo se devuelvan datos en bruto, no objetos completos
               through: { attributes: [] } // Evitar incluir los datos de la tabla intermedia
@@ -29,7 +28,7 @@ const getAllRecipes = async() =>{
           })
 
           
-        const combineRecipe = [...recipe,...recipeDb]
+        const combineRecipe = [...recipe,...recipeDb] //uno las recetas de api con las de Db
         return combineRecipe
 }
 module.exports={getAllRecipes}

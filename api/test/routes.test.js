@@ -5,7 +5,8 @@ const router = require('../src/routes/index')
 
 describe('Pruebas para las rutas en rutas/index.js',() => {
   test('GET /recipes debería devolver un código de estado 200 y un objeto JSON', async () => {
-    const response = await request(app).get('/recipes');
+    const response = await request(app).get('/recipes'); //hago peticion a la ruta
+    //expect
     expect(response.status).toBe(200);
     expect(response.type).toBe('application/json');
   });

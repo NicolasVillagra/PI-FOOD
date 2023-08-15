@@ -2,6 +2,7 @@ const axios = require('axios')
 const {Recipe} = require('../db')
 const {Diets} = require('../db');
 require('dotenv').config();
+const { validate: isUUID } = require('uuid');
 const {API_KEY_TWO} = process.env;
 
 const apiKey =API_KEY_TWO
@@ -9,7 +10,7 @@ const apiKey =API_KEY_TWO
 const getRecipe =async (req,res)=>{
   const {idRecipe} = req.params
   try {
-    if(typeof idRecipe === 'string'){
+    if(isUUID(idRecipe)){ //valido si es uuid
       const recipeDb = await Recipe.findByPk(idRecipe,{include: {
         model: Diets, // Incluir el modelo Diet en la consulta
         attributes: ['name'], // Especificar qué atributos de Diet deseas incluir
@@ -18,7 +19,7 @@ const getRecipe =async (req,res)=>{
       }})
       res.status(200).json(recipeDb)
     }
-    else{
+    else{ //si es id normal
       const apiRequest = await axios(`https://api.spoonacular.com/recipes/${idRecipe}/information?apiKey=${apiKey}&includeNutrition=true.`)
       const response = apiRequest.data
       const recipe =  {
@@ -33,7 +34,7 @@ const getRecipe =async (req,res)=>{
      res.status(200).json(recipe)
     }
   } catch (error) {
-    res.status(400).json({error:'no sirve', details:error.mensagge})
+    res.status(400).json({error:'no sirve',error})
   }
 
 };

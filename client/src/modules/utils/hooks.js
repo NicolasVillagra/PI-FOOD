@@ -11,7 +11,7 @@ export const useRecipesData = () => {
   const [cards, setCards] = useState([]);
   const [originalState, setOriginalState] = useState([]); // estado original
   const [orderedCards, setOrderedCards] = useState([]); // cards ordenadas
-  const [dietsFilter, setDietsFilter] = useState(''); // recetas por dieta
+  const [dietsFilter, setDietsFilter] = useState(""); // recetas por dieta
   const [cardsPerPage, setCardsPerPage] = useState(9); // cantidad de cards por pagina
   const [currentPage, setcurrentPage] = useState(1); // pagina inicial
   const lastIndex = currentPage * cardsPerPage
@@ -37,12 +37,12 @@ export const useRecipesData = () => {
     setDietsFilter(event.target.value.toLowerCase());
   };
 
-  const filterToDb = () => {
+  const filterToDb = () => { //FILTRO POR DATA BASE
     const filter = dataBaseFn(originalState);
     dispatch(updateFormData(filter));
   };
 
-  const filterToApi = () => {
+  const filterToApi = () => { //FILTRO POR API
     const filter = apiFn(originalState);
     dispatch(updateFormData(filter));
   };

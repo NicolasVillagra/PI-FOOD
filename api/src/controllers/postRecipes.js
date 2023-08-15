@@ -16,16 +16,16 @@ const postRecipe = async (req, res) => {
 
     // lo asocio con una receta
     const dietTypeInstances = await Promise.all(
-      diets.map(async dietTypeName => {
+      diets.map(async dietTypeName => { 
         let dietType = await Diets.findOne({ where: { name: dietTypeName } });
-        if (!dietType) {
+        if (!dietType) { //si no se encuentra la dieta se crea una
           dietType = await Diets.create({ name: dietTypeName });
         }
         return dietType;
       })
     );
 
-    await recipe.setDiets(dietTypeInstances);
+    await recipe.setDiets(dietTypeInstances); //se relaciona la dieta con la receta
     res.status(201).json(recipe);
   } catch (err) {
     console.error(err);

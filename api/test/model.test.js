@@ -14,7 +14,7 @@ describe('Test Recipe Model',()=>{
       });
 
       it('Verificamos que los types esten correctos', async ()=>{
-        const recipe = await Recipe.create({
+        const recipe = await Recipe.create({ //creo el modelo de test
             id:uuidv4(),
             name:"Pastas Caseras",
             summary:"Pasta hechas por ti mismo",
