@@ -10,7 +10,7 @@ const SearchBar = () => {
    const dispatch = useDispatch()
     const [name, setName] = useState('')
     const handleChange = (event) => {
-        setName(event.target.value);
+        setName(event.target.value); // paso la data de los inputs
       };
     
       const handleSearch = () => {

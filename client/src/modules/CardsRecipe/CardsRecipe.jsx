@@ -3,8 +3,10 @@ import CardRecipe from '../Card/CardRecipe'
 import styles from './CardsRecipe.module.css'
 import Pagination from '../Pagination/Pagination'
 import { useRecipesData } from '../utils/hooks'
+import { filterToAz, filterToZa } from '../../redux/actions'
+import { useDispatch } from 'react-redux'
 
-const CardsRecipe =  ({updateCards}) => {
+const CardsRecipe =  () => {
   const {
     cards,
     firstIndex,
@@ -14,14 +16,22 @@ const CardsRecipe =  ({updateCards}) => {
     filteredCards,
     totalRecipeFilter,
     fetchData,
-    orderArrayAtoZ,
-    orderArrayZtoA,
     handleChange,
     filterToDb,
     filterToApi,
     setcurrentPage,
     lastIndex
   } = useRecipesData();
+
+  const dispatch = useDispatch()
+
+  const handleAtoZ = ()=>{
+    dispatch(filterToAz())
+  }
+  const handleZtoA = ()=>{
+    dispatch(filterToZa())
+  }
+  
 
 
 useEffect(() => {
@@ -36,8 +46,8 @@ useEffect(() => {
     <div>
       <div className={styles.selector}>
         <div className={styles.buttonContainer}>
-        <button className={styles.button} onClick={orderArrayAtoZ}>Ordenar de A-Z</button>
-        <button className={styles.button} onClick={orderArrayZtoA}>Ordernar de Z-A</button>
+        <button data-testid="mi-componente" className={styles.button} onClick={handleAtoZ}>Ordenar de A-Z</button>
+        <button className={styles.button} onClick={handleZtoA}>Ordenar de Z-A</button>
         </div>
         <div className={styles.buttonContainer}>
           <button className={styles.button} onClick={filterToDb} >DataBase</button>
@@ -45,8 +55,8 @@ useEffect(() => {
         </div>
       </div>
       <div>
-        <label>filtrar por tipo de dieta</label>
-      <select onChange={handleChange} name='diets'value={dietsFilter}>
+        <label htmlFor='dietsSelect'>filtrar por tipo de dieta</label>
+      <select id='dietsSelect' onChange={handleChange} name='diets'value={dietsFilter}>
                 <option value="">Todas</option>
                 <option value="gluten Free">Gluten Free</option>
                 <option value="ketogenic">Ketogenic</option>

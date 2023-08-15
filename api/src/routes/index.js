@@ -13,6 +13,7 @@ const {getAllRecipes} = require('../controllers/getAllRecipes')
 const {getRecipesHandler,getRecipeByIdHandler} = require('../handlers/recipeHandle')
 const {allDiets} = require ('../handlers/dietsHandler');
 const { deleteRecipe } = require('../controllers/deleteRecipe ');
+const {putRecipe} = require('../controllers/putRecipe')
 
 
 
@@ -29,5 +30,6 @@ router.post('/recipes', postRecipe);
 router.get('/diets',allDiets);
 router.get('/getAllRecipes',getAllRecipes)
 router.delete('/recipes/:idDelete',deleteRecipe)
+router.put('/recipes/:id',putRecipe)
 
 module.exports = router;

@@ -25,7 +25,7 @@ export const filterDiets = (recetas, dietsFilter) => {
   //Filtro por DataBase
   
   export const dataBaseFn = (state)=>{
-    return state.filter((e)=>typeof e.id === 'string') //verifico si la id es un string
+    return state.filter((e)=>typeof e.id !== 'number') //verifico si la id es un string
   }
 
   //Filtro por API

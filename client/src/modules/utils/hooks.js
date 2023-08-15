@@ -3,24 +3,24 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useSelector, useDispatch } from 'react-redux';
 import { updateFormData } from '../../redux/actions';
-import { orderToAZ, orderToZA, filterDiets, apiFn, dataBaseFn } from './utils';
+import { filterDiets, apiFn, dataBaseFn } from './utils';
 
 export const useRecipesData = () => {
   const recipeDb = useSelector(state => state.Post);
   const dispatch = useDispatch();
   const [cards, setCards] = useState([]);
-  const [originalState, setOriginalState] = useState([]);
-  const [orderedCards, setOrderedCards] = useState([]);
-  const [dietsFilter, setDietsFilter] = useState('');
-  const [cardsPerPage, setCardsPerPage] = useState(9);
-  const [currentPage, setcurrentPage] = useState(1);
+  const [originalState, setOriginalState] = useState([]); // estado original
+  const [orderedCards, setOrderedCards] = useState([]); // cards ordenadas
+  const [dietsFilter, setDietsFilter] = useState(''); // recetas por dieta
+  const [cardsPerPage, setCardsPerPage] = useState(9); // cantidad de cards por pagina
+  const [currentPage, setcurrentPage] = useState(1); // pagina inicial
   const lastIndex = currentPage * cardsPerPage
   const firstIndex = lastIndex - cardsPerPage
 
   const filteredCards = dietsFilter ? filterDiets(recipeDb, dietsFilter) : recipeDb;
   const totalRecipeFilter = filteredCards.length;
 
-  const fetchData = () => {
+  const fetchData = () => { //traigo toda las recetas
     axios.get('http://localhost:3001/recipes')
       .then(response => {
         const recipes = response.data;
@@ -31,16 +31,6 @@ export const useRecipesData = () => {
       .catch(error => {
         console.error('Error al obtener los datos de la API:', error);
       });
-  };
-
-  const orderArrayAtoZ = () => {
-    const arrayAtoZ = orderToAZ(filteredCards);
-    setOrderedCards(arrayAtoZ);
-  };
-
-  const orderArrayZtoA = () => {
-    const arrayZtoA = orderToZA(filteredCards);
-    setOrderedCards(arrayZtoA);
   };
 
   const handleChange = event => {
@@ -70,8 +60,6 @@ export const useRecipesData = () => {
     filteredCards,
     totalRecipeFilter,
     fetchData,
-    orderArrayAtoZ,
-    orderArrayZtoA,
     handleChange,
     filterToDb,
     filterToApi,
