@@ -15,19 +15,20 @@ const PostRecipe = () => {
         image:'',
         diets:[],
     }
-    const [isSubmitEnabled, setIsSubmitEnabled] = useState(false);
+    const [isSubmitEnabled, setIsSubmitEnabled] = useState(false); //para manejar si se habilita el boton
     const [formData, setFormData] = useState(initialState)
     const [errors, setErrors] = useState({})
     const [existingRecipes, setExistingRecipes] = useState([]);
     
     // no se guarden recetas repetidas
     useEffect(() => {
-      const fetchExistingRecipes = async () => {
+      const fetchExistingRecipes = async () => { // MANEJO SI EXISTE UNA RECETA
         try {
-          const response = await axios.get('http://localhost:3001/recipes'); // Ajusta la URL según tu API
+          const response = await axios.get('http://localhost:3001/recipes');
           setExistingRecipes(response.data);
         } catch (error) {
-          console.log('Error fetching existing recipes:', error);
+          console.log('YA EXISTE LA RECETA', error);
+          window.alert(error) // si hay un error lo muestro
         }
       };
     
@@ -55,23 +56,23 @@ const PostRecipe = () => {
       const recipeName = formData.name.trim();
      if (existingRecipes.some((recipe) => recipe.name === recipeName)) {
       window.alert('ya existe esta receta');
-      // Puedes mostrar un mensaje de error o realizar alguna acción aquí
       return;
     }
       try {
         await axios.post('http://localhost:3001/recipes', {
           name: formData.name,
           summary: formData.summary,
-          healthScore: formData.healthScore, // Asegúrate de que la propiedad sea healthCore o saludCore, como lo tengas definido
+          healthScore: formData.healthScore, // PASO POR BODY EL ESTADO LOCAL 
           stepByStep: formData.stepByStep,
           diets: formData.diets,
         });
         
         setFormData(initialState);
-        setErrors({});
+        setErrors({}); //si todo sale bien seteo los errores en blanco
         setExistingRecipes([...existingRecipes, { name: recipeName }]); // guarda la receta creada
       } catch (error) {
         console.log({ errorMsg: 'no se pudo hacer la peticion', error });
+        window.alert(error)
       }
     };
 

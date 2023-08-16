@@ -29,7 +29,7 @@ const postRecipe = async (req, res) => {
     res.status(201).json(recipe);
   } catch (err) {
     console.error(err);
-    res.status(500).json({ error: 'Error del servidor', err });
+    res.status(500).json({ error: 'Error intero del servidor', err });
   }
 };
   module.exports ={postRecipe}

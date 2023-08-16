@@ -24,7 +24,6 @@ const Detail = () => {
       console.log("Me desmonto, adios!");
     };
   }, [id]);
-  console.log(recipe);
   return (
     <div className={styles.recipeContainer}>
       <div className={styles.dataContainer}>
@@ -49,7 +48,7 @@ const Detail = () => {
           <div>
             {recipe.diets && (
               <div>
-                {
+                {  //si es un array de objetos
                   Array.isArray(recipe.diets) ? (
                     recipe.diets.map((diet, index) => (
                       <h4 key={index}>
@@ -58,7 +57,7 @@ const Detail = () => {
                     ))
                   ) : (
                     <h4>{recipe.diets}</h4>
-                  ) // If diets is a single string
+                  ) 
                 }
               </div>
             )}

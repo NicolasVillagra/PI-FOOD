@@ -6,7 +6,7 @@ import { updateFormData } from '../../redux/actions';
 import { filterDiets, apiFn, dataBaseFn } from './utils';
 
 export const useRecipesData = () => {
-  const recipeDb = useSelector(state => state.Post);
+  const recipeDb = useSelector(state => state.Post); //MI ESTADO GLOBAL PARA COMUNICAR HOME CON SEARCH
   const dispatch = useDispatch();
   const [cards, setCards] = useState([]);
   const [originalState, setOriginalState] = useState([]); // estado original
@@ -17,6 +17,7 @@ export const useRecipesData = () => {
   const lastIndex = currentPage * cardsPerPage
   const firstIndex = lastIndex - cardsPerPage
 
+                        //si hay info en el dietsFilter filtro por dietas , si no devulve todas
   const filteredCards = dietsFilter ? filterDiets(recipeDb, dietsFilter) : recipeDb;
   const totalRecipeFilter = filteredCards.length;
 
@@ -30,6 +31,7 @@ export const useRecipesData = () => {
       })
       .catch(error => {
         console.error('Error al obtener los datos de la API:', error);
+        window.alert('Error al obtener los datos de la API:', error)
       });
   };
 

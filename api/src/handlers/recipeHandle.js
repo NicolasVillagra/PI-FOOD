@@ -6,8 +6,12 @@ const {getRecipe} = require ('../controllers/getRecipeById')
 const getRecipesHandler = async (req, res) => {
     const { name } = req.query;
     //si le estoy pasando Query llamo a recipes name , si no me las trae a todas
-    const results = name ? await getRecipesName(name) : await getAllRecipes(); 
-    res.json(results);
+    try {
+      const results = name ? await getRecipesName(name) : await getAllRecipes(); 
+      res.status(200).json(results);
+    } catch (error) {
+      res.status(400).json(error)
+    }
   };
 
 

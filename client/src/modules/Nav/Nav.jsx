@@ -8,7 +8,6 @@ const Nav = () => {
     <nav className={styles.navContainer}>
         <NavLink to='/Home'><h1>Food</h1></NavLink>
         <ul className={styles.navItem}>
-            <NavLink to='/Search'>Buscar tu receta</NavLink>
             <NavLink to='/Create'>Crea tu receta</NavLink>
         </ul>
         <SearchBar/>

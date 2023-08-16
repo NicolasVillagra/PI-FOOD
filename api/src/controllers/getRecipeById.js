@@ -34,7 +34,7 @@ const getRecipe =async (req,res)=>{
      res.status(200).json(recipe)
     }
   } catch (error) {
-    res.status(400).json({error:'no sirve',error})
+    res.status(400).json({error:'Error interno en el servido',error})
   }
 
 };

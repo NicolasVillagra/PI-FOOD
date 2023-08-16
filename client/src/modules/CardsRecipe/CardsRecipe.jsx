@@ -34,7 +34,7 @@ const CardsRecipe =  () => {
 
 
 useEffect(() => {
-  fetchData();
+  fetchData(); //un useEffect para que siempre cargue cada vez que se monte
 }, []);
 
  

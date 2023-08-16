@@ -1,10 +1,10 @@
 // Filtro de dietas
 export const filterDiets = (recetas, dietsFilter) => {
     return recetas.filter(recipe =>
-      recipe.diets.some(diet => {
-        if (typeof diet === 'string') {   //verifico si la dieta recibida es un stringo un objeto
+      recipe.diets.some(diet => {          //filtro para dietas de API
+        if (typeof diet === 'string') {   //verifico si la dieta recibida es un string o un objeto
           return diet.toLowerCase().includes(dietsFilter);
-        } else if (typeof diet === 'object' && diet.name) {
+        } else if (typeof diet === 'object' && diet.name) { //dieta de DB
           return diet.name.toLowerCase().includes(dietsFilter);
         }
         return false;
